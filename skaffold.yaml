@@ -1,0 +1,27 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - "./infra/k8s/*.yaml"
+      - "./infra/k8s-dev/*.yaml"
+build:
+  local:
+    push: false
+  artifacts:
+    - image: aprep/auction-auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: aprep/auction-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.ts[x]?'
+            dest: .
