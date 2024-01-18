@@ -3,10 +3,9 @@
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useRequest from '../../../hooks/use-request';
-import { revalidatePath } from 'next/cache';
 
 export default () => {
-  const router = useRouter();
+  const { push, refresh } = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,8 +16,8 @@ export default () => {
       email, password,
     },
     onSuccess: () => {
-      router.push('/');
-      revalidatePath('/', 'layout');
+      push('/');
+      refresh();
     },
   });
 

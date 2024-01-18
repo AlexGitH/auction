@@ -1,13 +1,11 @@
 'use client'
 
 import { FormEvent, useState } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import useRequest from '../../../hooks/use-request';
-// import { revalidatePath } from 'next/cache';
-// import { useRouter } from 'next/router';
 
 export default () => {
-  const router = useRouter();
+  const { push, refresh } = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,9 +16,8 @@ export default () => {
       email, password,
     },
     onSuccess: () => {
-      router.push('/');
-      // revalidatePath('/', 'layout');
-      // redirect('/'+`?timestamp=${new Date().getTime()}`);
+      push('/');
+      refresh();
     },
   });
 

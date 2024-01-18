@@ -1,21 +1,19 @@
 'use client'
 
 import { useEffect } from 'react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import useRequest from '../../../hooks/use-request';
-// import { revalidatePath } from 'next/cache';
 
 export default () => {
+  const { push, refresh } = useRouter();
 
-  // const router = useRouter();
   const { doRequest, errors } = useRequest({
     url: '/api/users/signout',
     method: 'post',
     body: {},
     onSuccess: () => {
-      // router.push('/');
-      redirect('/'+`?timestamp=${new Date().getTime()}`);
-      // revalidatePath('/', 'layout');
+      push('/');
+      refresh();
     },
   });
 
@@ -26,7 +24,6 @@ export default () => {
 
   useEffect( () => {
     doRequest();
-    //.then(()=> revalidatePath('/', 'layout'));
   }, []);
 
   return (<>
