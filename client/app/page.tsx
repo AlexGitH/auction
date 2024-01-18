@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { Suspense } from 'react';
 import Loading from './loading';
+import { getCurrentUser } from '@/lib/actions';
+import { cookies } from 'next/headers';
 
 const fetchPages = async(url: string)=>{
     const results = [];
@@ -38,7 +40,17 @@ const fetchPages = async(url: string)=>{
 // };
 
 
-export default async function Page({ vehicles }:{vehicles: any[]}) {
+export default async function Page() {
+
+  const cookieStore = cookies();
+  const session = cookieStore.get('session');
+  const cookie = `session=${session?.value}`;
+
+  console.log('HomePage ================ cookie', cookie);
+  const response = await getCurrentUser(cookie);
+  const currentUser = response?.currentUser;
+
+
   // just a placeholder;
   // {
   //   id: 1,
@@ -46,31 +58,36 @@ export default async function Page({ vehicles }:{vehicles: any[]}) {
   //   startingPrice: '200.01',
   //   start: '2024-01-22 20:00:00',
   // }
-  console.log('++DDDDDDDATA FETCHED!!!!')
-  const data:any = await fetchPages('https://swapi.dev/api/vehicles/');
-  // const v:any[] = data.filter((x:any)=>x.cost_in_credits !== 'unknown') },
-  // const itemList = vehicles.map((item: any, idx: number) => {
-  const itemList = (data.filter((x:any)=>x.cost_in_credits !== 'unknown') ).map((item: any, idx: number) => {
-    return (
-      <tr key={idx}>
-        <td>{item.name}</td>
-        <td>{item.cost_in_credits}</td>
-        <td>{new Date(item.created).toISOString()}</td>
-        <td>
-          <Link href="/items/[itemId]" as={`/items/${item.id}`}>
-            View
-          </Link>
-        </td>
-      </tr>
-    )
-  });
+
+
+
+
+//   console.log('++DDDDDDDATA FETCHED!!!!')
+//   const data:any = await fetchPages('https://swapi.dev/api/vehicles/');
+//   const itemList = (data.filter((x:any)=>x.cost_in_credits !== 'unknown') ).map((item: any, idx: number) => {
+//     return (
+//       <tr key={idx}>
+//         <td>{item.name}</td>
+//         <td>{item.cost_in_credits}</td>
+//         <td>{new Date(item.created).toISOString()}</td>
+//         <td>
+//           <Link href="/items/[itemId]" as={`/items/${item.id}`}>
+//             View
+//           </Link>
+//         </td>
+//       </tr>
+//     )
+//   });
 
 
   return (
     <div>
       <h2>Auction</h2>
+      <div>{currentUser ? <b>logged In</b> : <i>not logged in</i> }</div>
       <Suspense fallback={<Loading />}>
-        <table className="table">
+        <h3>Home page</h3>
+
+        {/* <table className="table">
           <thead>
             <tr>
               <th>Title</th>
@@ -82,7 +99,7 @@ export default async function Page({ vehicles }:{vehicles: any[]}) {
           <tbody>
             {itemList}
           </tbody>
-        </table>
+        </table> */}
       </Suspense>
     </div>
   )

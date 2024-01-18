@@ -37,7 +37,7 @@ Also before running the project check and create the environmental variables.
 If you have a script, then just runt it
 
 ```sh
-bash /tmp/k8s-secrets.sh
+bash ./tmp/k8s-secrets.sh
 ```
 
 or manually

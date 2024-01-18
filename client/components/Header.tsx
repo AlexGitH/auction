@@ -1,6 +1,22 @@
+import { getCurrentUser } from '@/lib/actions';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 
-export default function Header({ currentUser }: {currentUser: any}) {
+export default async function Header({ currentUser }: {currentUser: any}) {
+
+
+  if (!currentUser) {
+    const cookieStore = cookies();
+    const session = cookieStore.get('session');
+    const cookie = `session=${session?.value}`;
+
+    console.log('HEADER ================ cookie', cookie);
+    const data = await getCurrentUser(cookie);
+    currentUser = data?.currentUser;
+  }
+
+  console.log('Header: currentUser', currentUser);
+
   const links = [
     !currentUser && { label: 'Sing Up', href: '/auth/signup' },
     !currentUser && { label: 'Sing In', href: '/auth/signin' },
