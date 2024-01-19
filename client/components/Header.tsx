@@ -26,7 +26,7 @@ export default async function Header({ currentUser }: {currentUser: any}) {
   ]
     .filter((linkConfig) => linkConfig)
     .map(({ label, href }) => (
-      <li key={href} className="nav-item">
+      <li key={href} className="nav-item mx-2 ">
         <Link href={href}>
           {label}
         </Link>
