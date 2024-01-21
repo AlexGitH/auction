@@ -21,6 +21,8 @@ export default async function Header({ currentUser }: {currentUser: any}) {
     !currentUser && { label: 'Sing Up', href: '/auth/signup' },
     !currentUser && { label: 'Sing In', href: '/auth/signin' },
     currentUser && { label: 'Sell Item', href: '/items/new' },
+    currentUser && { label: 'My Items', href: '/items' },
+    currentUser && { label: 'Active Bids', href: '/bids' },
     currentUser && { label: 'My Orders', href: '/orders' },
     currentUser && { label: 'Sing Out', href: '/auth/signout' },
   ]
