@@ -1,6 +1,6 @@
 import buildClient from '@/app/api/build-client';
 import { revalidatePath } from 'next/cache';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export async function getCurrentUser(cookie:string) {
   const headerList = headers();
@@ -21,3 +21,20 @@ export async function getCurrentUser(cookie:string) {
   revalidatePath('/', 'layout');
   return data;
 }
+
+export async function getReqHeaders() {
+  const cookieStore = cookies();
+  const session = cookieStore.get('session');
+  const cookie = `session=${session?.value}`;
+
+  const headerList = headers();
+  const host = headerList.get('host')||'';
+
+  return {
+    headers: {
+      Host: host,
+      'Cookie': cookie,
+    },
+  };
+}
+
