@@ -1,32 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-mongo-depl
+  name: items-mongo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-mongo
+      app: items-mongo
   template:
     metadata:
       labels:
-        app: auth-mongo
+        app: items-mongo
     spec:
       containers:
-        - name: auth-mongo
+        - name: items-mongo
           image: mongo
-          #imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-mongo-srv
+  name: items-mongo-srv
 spec:
-  type: ClusterIP
+  type: ClusterIP ## get DB port forwarding just for testing (should be removed)
   selector:
-    app: auth-mongo
+    app: items-mongo
   ports:
-    - name: auth-mongo-db # only for internal logging purposes
+    - name: items-mongo-db # only for internal logging purposes
       protocol: TCP
       port: 27017
       targetPort: 27017

@@ -185,3 +185,30 @@ Events:
   Normal  Sync    101s (x2 over 109s)  nginx-ingress-controller  Scheduled for sync
 
 ```
+
+## Notes
+
+### Configure JEST
+
+In case when your tests are failing with error q
+
+```txt
+jest SyntaxError: Cannot use import statement outside a module
+```
+
+Add this setup into `package.json`:
+
+```json
+// ...
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
+  },
+// ...
+
+```
+
+Make sure you have JEST config file in `./src/test/setup.ts` with your helpers and wrappers.

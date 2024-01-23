@@ -25,3 +25,11 @@ build:
         manual:
           - src: '**/*.ts[x]?'
             dest: .
+    - image: aprep/auction-items
+      context: items
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

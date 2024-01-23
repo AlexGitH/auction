@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 
 const start = async () => {
-    console.log('starting file..');
+    console.log('starting auth..');
 
     // {
     //         useNewUrlParser: true,
