@@ -3,7 +3,6 @@
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useRequest from '../../..//hooks/use-request';
-import { getCurrentUser } from '@/lib/actions';
 
 export default function NewItemPage() {
   const { push, refresh } = useRouter();
@@ -19,7 +18,7 @@ export default function NewItemPage() {
       name, startPrice, description
     },
     onSuccess: () => {
-      push('/');
+      push('/items/user-items');
       refresh();
     },
   });

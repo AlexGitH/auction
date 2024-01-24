@@ -1,5 +1,4 @@
-import buildClient from '@/app/api/build-client';
-import { getReqHeaders } from '@/lib/actions';
+import { getCurrentUserItems } from '@/lib/actions';
 
 // async function getCurrentUserItems() {
 //   // fetch('/api/items/currentuser').then(x=>x.json()).then(x=>console.log(x))
@@ -27,23 +26,12 @@ function CardsGrid({items}:{items:any[]}) {
 }
 
 export default async function UserItems() {
-
-  const req = await getReqHeaders();
-
-  const client = buildClient({ req });
-
-  // const { data: items } = await client.get('/api/items/currentuser'); // run the async request
-  const { data: items } = await client.get('/api/items/currentuser'); // run the async request
-  // const items = await getCurrentUserItems();
-
-  const test=Array.from({length: 10}).map((x,i)=>({id: i,name:'test '+i,description: 'some description', startPrice: 124.5}));
+  const items = await getCurrentUserItems();
+  const isTest = true;
 
   return <div>
-    This is the list of <b>all </b> user <b>Items </b> for auction.
-    <ul>
-      {items.map((x:any)=><li key={x.id}>{x.name}</li>)}
-    </ul>
+    This is the list of <b>current</b> user <b>Items </b> for the auction.
     <CardsGrid items={items}/>
-    {/* {JSON.stringify(items, null, 2)} */}
+    { isTest && <pre>{JSON.stringify(items, null, 2)}</pre>}
   </div>;
 };

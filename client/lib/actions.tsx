@@ -22,6 +22,13 @@ export async function getCurrentUser(cookie:string) {
   return data;
 }
 
+export async function getCurrentUserItems() {
+  const req = await getReqHeaders();
+  const client = buildClient({ req });
+  const { data } = await client.get('/api/items/currentuser'); // run the async request
+  return data;
+}
+
 export async function getReqHeaders() {
   const cookieStore = cookies();
   const session = cookieStore.get('session');
