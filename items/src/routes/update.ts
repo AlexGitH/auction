@@ -37,10 +37,9 @@ router.put(
             throw new NotAuthorizedError();
         }
 
-        item.set({
-            name: req.body.name,
-            startPrice: req.body.startPrice,
-        });
+        const { name, startPrice, description } = req?.body || {};
+
+        item.set({ name, startPrice, description });
 
         await item.save();
 

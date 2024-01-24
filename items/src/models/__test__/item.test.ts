@@ -6,6 +6,7 @@ it('implements optimistic concurrency control', async () => {
         name: 'artifact',
         startPrice: 50,
         userId: '1234',
+        description: 'text',
     });
 
     // Save the item to the database
@@ -32,12 +33,13 @@ it('implements optimistic concurrency control', async () => {
     throw new Error('Should not get this point');
 });
 
-it('increments the version nymber on multiple saves', async () => {
+it('increments the version number on multiple saves', async () => {
     // Create an instance of an item
     const item = Item.build({
         name: 'artifact',
         startPrice: 59,
         userId: '1234',
+        description: 'text',
     });
 
     // Save the item to the database

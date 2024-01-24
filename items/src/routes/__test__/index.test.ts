@@ -11,6 +11,7 @@ const createItem = () => {
         .send({
             name: 'aksjdlfa',
             startPrice: 20,
+            description: 'text',
         });
 };
 

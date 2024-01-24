@@ -14,6 +14,7 @@ it('returns a 404if the item is no found', async () => {
 it('returns the item if it is found', async () => {
     const name = 'artifact';
     const startPrice = 20;
+    const description = 'text';
 
     const response = await request(app)
         .post(ROUTE)
@@ -21,6 +22,7 @@ it('returns the item if it is found', async () => {
         .send({
             name,
             startPrice,
+            description,
         })
         .expect(201);
 
@@ -31,4 +33,5 @@ it('returns the item if it is found', async () => {
 
     expect(itemResponse.body.name).toEqual(name);
     expect(itemResponse.body.startPrice).toEqual(startPrice);
+    expect(itemResponse.body.description).toEqual(description);
 });

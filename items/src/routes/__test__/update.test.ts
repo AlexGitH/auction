@@ -14,6 +14,7 @@ it('returns a 404 if the provided id does not exist', async () => {
         .send({
             name: 'asdfjasdf',
             startPrice: 20,
+            description: 'text',
         })
         .expect(404);
 });
@@ -25,6 +26,7 @@ it('returns a 401 if the user is not authenticated', async () => {
         .send({
             name: 'asdfjasdf',
             startPrice: 20,
+            description: 'text',
         })
         .expect(401);
 });
@@ -38,6 +40,7 @@ it('returns a 401 if the user does not own the item', async () => {
         .send({
             name,
             startPrice: 25,
+            description: 'text',
         });
 
     await request(app)
@@ -46,11 +49,12 @@ it('returns a 401 if the user does not own the item', async () => {
         .send({
             name: 'test',
             startPrice: 1000,
+            description: 'text',
         })
         .expect(401);
 });
 
-it('returns a 400 if the user provides invalid name or startPrice for item', async () => {
+it('returns a 400 if the user provides invalid name or startPrice or description for item', async () => {
     const name = 'kasjdfksjd';
     const cookie = global.signin();
 
@@ -60,6 +64,7 @@ it('returns a 400 if the user provides invalid name or startPrice for item', asy
         .send({
             name,
             startPrice: 25,
+            description: 'text',
         });
 
     await request(app)
@@ -68,6 +73,7 @@ it('returns a 400 if the user provides invalid name or startPrice for item', asy
         .send({
             name: '',
             startPrice: 1000,
+            description: 'text',
         })
         .expect(400);
 
@@ -77,6 +83,7 @@ it('returns a 400 if the user provides invalid name or startPrice for item', asy
         .send({
             name,
             startPrice: -1000,
+            description: 'text',
         })
         .expect(400);
 
@@ -85,8 +92,30 @@ it('returns a 400 if the user provides invalid name or startPrice for item', asy
         .set('Cookie', cookie)
         .send({
             name,
+            description: 'text',
         })
         .expect(400);
+
+    // invalid description
+    await request(app)
+        .put(`${ROUTE}/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            name,
+            startPrice: 1000,
+            description: '',
+        })
+        .expect(400);
+
+    await request(app)
+        .put(`${ROUTE}/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            name,
+            startPrice: 1000,
+        })
+        .expect(400);
+
 });
 
 it('updates the item with valid values', async () => {
@@ -99,6 +128,7 @@ it('updates the item with valid values', async () => {
         .send({
             name,
             startPrice: 25,
+            description: 'text',
         });
 
     await request(app)
@@ -107,6 +137,7 @@ it('updates the item with valid values', async () => {
         .send({
             name: 'new name',
             startPrice: 100,
+            description: 'text2',
         })
         .expect(200);
 
@@ -116,6 +147,7 @@ it('updates the item with valid values', async () => {
 
     expect(itemResponse.body.name).toEqual('new name');
     expect(itemResponse.body.startPrice).toEqual(100);
+    expect(itemResponse.body.description).toEqual('text2');
 });
 
 // it('publishes an event', async () => {
@@ -144,6 +176,7 @@ it('updates the item with valid values', async () => {
 
 it('rejects updates if the item is reserved', async () => {
     const name = 'kasjdfksjd';
+    const description = 'text';
     const cookie = global.signin();
 
     const response = await request(app)
@@ -152,6 +185,7 @@ it('rejects updates if the item is reserved', async () => {
         .send({
             name,
             startPrice: 25,
+            description,
         });
 
     const item = await Item.findById(response.body.id);
@@ -164,6 +198,7 @@ it('rejects updates if the item is reserved', async () => {
         .send({
             name: 'new name',
             startPrice: 100,
+            description: 'text 2',
         })
         .expect(400);
 });

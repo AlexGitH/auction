@@ -4,8 +4,9 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 interface ItemAttrs {
     name: string;
     startPrice: number;
+    finalPrice?: number;
     userId: string;
-    description?: string;
+    description: string;
 }
 
 interface ItemModel extends mongoose.Model<ItemDoc> {
@@ -15,8 +16,9 @@ interface ItemModel extends mongoose.Model<ItemDoc> {
 interface ItemDoc extends mongoose.Document {
     name: string;
     startPrice: number;
+    finalPrice: number;
     userId: string;
-    description?: string;
+    description: string;
     version: number;
     orderId?: string;
 }
@@ -31,14 +33,19 @@ const itemSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        finalPrice: {
+            type: Number,
+            default: 0,
+        },
         userId: {
             type: String,
             required: true,
         },
-        orderId: {
-            type: String,
-        },
         description: {
+            type: String,
+            required: true,
+        },
+        orderId: {
             type: String,
         },
     },
