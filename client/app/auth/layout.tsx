@@ -7,7 +7,7 @@ export default async function ItemsLayout({
 }) {
 
   return (
-    <div className="container" >
+    <div className="container">
       {children}
     </div>
   )

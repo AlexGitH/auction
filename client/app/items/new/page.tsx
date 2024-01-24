@@ -37,10 +37,10 @@ export default function NewItemPage() {
   };
 
   return (
-    <div>
+    <div >
       {/* <form action=""> */}
 
-      <form onSubmit={onSubmit}>
+      <form  onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="item-name">
             Item Name
