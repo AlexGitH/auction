@@ -212,3 +212,37 @@ Add this setup into `package.json`:
 ```
 
 Make sure you have JEST config file in `./src/test/setup.ts` with your helpers and wrappers.
+
+### TEST
+
+Next packages should be in devDependency section to avoid errors after docker image creation
+
+```json
+    "@types/cookie-session": "2.0.44",
+    "@types/express": "4.17.13",
+    "@types/jsonwebtoken": "8.5.9",
+```
+
+Error example:
+
+```text
+                                                                                                                 [842/1802]
+[items] [INFO] 10:28:50 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.3.3)                                                                                                                                      
+[auth] [INFO] 10:28:52 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.3.3)                                                                                                                                       
+[client]    ▲ Next.js 14.0.4                                                                                                                                                                                                           
+[client]    - Local:        http://localhost:5000                                                                                                                                                                                      
+[client]                                                                                                                                                                                                                               
+[client]  ✓ Ready in 23.1s                                                                                                                                                                                                             
+[items] Compilation error in /app/src/app.ts                                                                                                                                                                                           
+[items] [ERROR] 10:29:27 ⨯ Unable to compile TypeScript:                                                                                                                                                                               
+[items] src/app.ts(1,21): error TS7016: Could not find a declaration file for module 'express'. '/app/node_modules/express/index.js' implicitly has an 'any' type.                                                                     
+[items]   Try `npm i --save-dev @types/express` if it exists or add a new declaration (.d.ts) file containing `declare module 'express';`                                                                                              
+[items] src/app.ts(3,22): error TS7016: Could not find a declaration file for module 'body-parser'. '/app/node_modules/body-parser/index.js' implicitly has an 'any' type.                                                             
+[items]   Try `npm i --save-dev @types/body-parser` if it exists or add a new declaration (.d.ts) file containing `declare module 'body-parser';`                                                                                      
+[items] src/app.ts(5,27): error TS7016: Could not find a declaration file for module 'cookie-session'. '/app/node_modules/cookie-session/index.js' implicitly has an 'any' type.                                                       
+[items]   Try `npm i --save-dev @types/cookie-session` if it exists or add a new declaration (.d.ts) file containing `declare module 'cookie-session';`                                                                                
+[items]                                                                                                                                                                                                                                
+[auth] starting auth..                                                                                                                                                
+
+
+```
