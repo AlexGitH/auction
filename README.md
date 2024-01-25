@@ -113,7 +113,7 @@ Wait until all pods are stopped.
 Use `doctl` utility to **destroy** cluster remotely on DO:
 
 ```sh
-time doctl kubernetes delete create alex-do-cluster-11
+time doctl kubernetes cluster delete alex-do-cluster-11
 ```
 
 ## Installation
@@ -213,9 +213,9 @@ Add this setup into `package.json`:
 
 Make sure you have JEST config file in `./src/test/setup.ts` with your helpers and wrappers.
 
-### TEST
+### Common library dependencies note
 
-Next packages should be in devDependency section to avoid errors after docker image creation
+Next packages should be in `devDependency` section to avoid errors after docker image creation
 
 ```json
     "@types/cookie-session": "2.0.44",
