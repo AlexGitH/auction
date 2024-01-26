@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validateRequest } from '@fairdeal/common';
 import { Item } from '../models/item';
-// import { natsWrapper } from '../nats-wrapper';
+import { natsWrapper } from '../nats-wrapper';
+import { ItemCreatedPublisher } from '../events/item-created-publisher';
 
 const router = express.Router();
 
@@ -28,6 +29,15 @@ router.post(
         });
 
         await item.save();
+        await new ItemCreatedPublisher(natsWrapper.client).publish({
+            id: item.id,
+            version: item.version,
+            name: item.name,
+            startPrice: item.startPrice,
+            finalPrice: item.finalPrice,
+            userId: item.userId,
+            description: item.description,
+        })
 
         return res.status(201).send(item);
     }

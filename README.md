@@ -246,3 +246,26 @@ Error example:
 
 
 ```
+
+### Errors with NATS streaming server
+
+If you faced and error with next info `chainedError: NatsError: The request timed out for subscription id: -1` when cluster is starting. Check Cluster id parameters in the `infra` forlder for NATS and related services.
+
+hear is the listing of encountered issue
+
+```txt
+MONGO or NATS ERROR: NatsError: stan: connect request timeout
+    at Object.callback (/app/node_modules/node-nats-streaming/lib/stan.js:312:15)
+    at Timeout.<anonymous> (/app/node_modules/nats/lib/nats.js:1930:14)                                                                                                                                                        
+    at listOnTimeout (node:internal/timers:569:17)                                                                                                                                                                             
+    at processTimers (node:internal/timers:512:7) {                                                                                                                                                                            
+  code: 'stan: connect request timeout',                                                                   
+  chainedError: NatsError: The request timed out for subscription id: -1
+      at Timeout.<anonymous> (/app/node_modules/nats/lib/nats.js:1930:23)
+      at listOnTimeout (node:internal/timers:569:17)
+      at processTimers (node:internal/timers:512:7) {                                                                                                                                                                          
+    code: 'REQ_TIMEOUT',                        
+    chainedError: undefined     
+  }                    
+}  
+```

@@ -28,7 +28,7 @@ spec:
             '2',
             '-SD',   # Enable STAN debugging output
             '-cid',  # Cluster ID (default: test-cluster)
-            'ticketing'
+            'auction'
           ]
 ---
 apiVersion: v1

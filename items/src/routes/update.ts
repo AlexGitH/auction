@@ -8,7 +8,8 @@ import {
     BadRequestError,
 } from '@fairdeal/common';
 import { Item } from '../models/item';
-// import { natsWrapper } from '../nats-wrapper';
+import { natsWrapper } from '../nats-wrapper';
+import { ItemUpdatedPublisher } from '../events/item-updated-publisher';
 
 const router = express.Router();
 
@@ -37,11 +38,20 @@ router.put(
             throw new NotAuthorizedError();
         }
 
-        const { name, startPrice, description } = req?.body || {};
+        const { name, startPrice, finalPrice, description } = req?.body || {};
 
-        item.set({ name, startPrice, description });
+        item.set({ name, startPrice, finalPrice, description });
 
         await item.save();
+        await new ItemUpdatedPublisher(natsWrapper.client).publish({
+            id: item.id,
+            version: item.version,
+            name: item.name,
+            startPrice: item.startPrice,
+            finalPrice: item.finalPrice,
+            userId: item.userId,
+            description: item.description,
+        })
 
         return res.send(item);
     }

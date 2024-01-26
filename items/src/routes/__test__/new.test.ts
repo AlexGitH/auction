@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { Item } from '../../models/item';
-// import { natsWrapper } from '../../nats-wrapper';
+import { natsWrapper } from '../../nats-wrapper';
 
 const ROUTE = '/api/items';
 
@@ -112,17 +112,18 @@ it('creates an item with valid inputs', async () => {
     expect(items[0].description).toEqual(description);
 });
 
-// it('publishes an event', async () => {
-//     const name = 'asasdfas';
+it('publishes an event', async () => {
+    const name = 'asasdfas';
 
-//     await request(app)
-//         .post(ROUTE)
-//         .set('Cookie', global.signin())
-//         .send({
-//             name,
-//             startPrice: 25,
-//         })
-//         .expect(201);
+    await request(app)
+        .post(ROUTE)
+        .set('Cookie', global.signin())
+        .send({
+            name,
+            startPrice: 25,
+            description: 'text',
+        })
+        .expect(201);
 
-//     expect(natsWrapper.client.publish).toHaveBeenCalled();
-// });
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
