@@ -249,9 +249,9 @@ Error example:
 
 ### Errors with NATS streaming server
 
-If you faced and error with next info `chainedError: NatsError: The request timed out for subscription id: -1` when cluster is starting. Check Cluster id parameters in the `infra` forlder for NATS and related services.
+If you faced and error with next info `chainedError: NatsError: The request timed out for subscription id: -1` when cluster is starting. Check Cluster id parameters in the `infra` folder for NATS and related services(`NATS_CLUSTER_ID`).
 
-hear is the listing of encountered issue
+Here is the listing of how this issue looks like:
 
 ```txt
 MONGO or NATS ERROR: NatsError: stan: connect request timeout
