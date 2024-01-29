@@ -42,6 +42,7 @@ router.put(
 
         item.set({ name, startPrice, finalPrice, description });
 
+        console.log('+++++ item update', { name, startPrice, finalPrice, description });
         await item.save();
         await new ItemUpdatedPublisher(natsWrapper.client).publish({
             id: item.id,
